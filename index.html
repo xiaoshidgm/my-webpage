@@ -85,31 +85,68 @@
     </style>
 </head>
 <body>
-    </body>
-<!-- === 背景音乐播放按钮 === -->
-<button id="musicBtn" onclick="playBackgroundMusic()" 
+    <!-- === 强化版背景音乐播放器 === -->
+<button id="musicBtn" onclick="activateAudio()" 
         style="position: fixed; top: 20px; right: 20px; padding: 10px 15px; 
-               background: rgba(255,255,255,0.9); border: none; border-radius: 20px; 
-               cursor: pointer; z-index: 1000; font-size: 14px;">
-    🎵 开启音乐
+               background: rgba(255,255,255,0.9); border: 2px solid #ff6b88; border-radius: 20px; 
+               cursor: pointer; z-index: 1000; font-size: 14px; color: #ff6b88; font-weight: bold;">
+    🎵 点击我，然后点击页面任意处
 </button>
 
 <script>
-function playBackgroundMusic() {
-    var audio = new Audio('透过眼睛看见心_(OJ版)-OJ....mp3');
-    audio.loop = true;
-    audio.volume = 0.3;
+// 全局变量，用于存储音频对象
+let backgroundAudio = null;
+let isAudioUnlocked = false;
+
+// 第一步：点击按钮时，初始化音频并引导用户
+function activateAudio() {
+    if (!backgroundAudio) {
+        // 创建音频对象，使用您上传的完整文件名
+        backgroundAudio = new Audio('透过眼睛看见心_(OJ版)-OJ....mp3');
+        backgroundAudio.loop = true;
+        backgroundAudio.volume = 0.5;
+        
+        // 提前加载音频（重要步骤！）
+        backgroundAudio.load();
+    }
     
-    audio.play().then(function() {
-        document.getElementById('musicBtn').innerHTML = '🎵 音乐播放中';
-        document.getElementById('musicBtn').style.background = 'rgba(144, 238, 144, 0.9)';
-    }).catch(function(error) {
-        console.error('播放失败:', error);
-        alert('播放失败，请点击页面任意位置后重试按钮');
-    });
+    // 改变按钮提示文字，引导用户进行下一步
+    document.getElementById('musicBtn').innerHTML = '🎵 现在请点击页面空白处！';
+    document.getElementById('musicBtn').style.background = 'rgba(255, 107, 136, 0.2)';
+    
+    // 提示用户（您之前已经看到过的弹窗）
+    alert("请点击『确定』后，再随意点击一下页面的空白背景区域，音乐就会响起啦！❤");
+}
+
+// 第二步：监听页面任意位置的点击事件（关键步骤！）
+document.addEventListener('click', function(event) {
+    // 如果用户不是点击音乐按钮，且音频已初始化但未播放
+    if (event.target.id !== 'musicBtn' && backgroundAudio && !isAudioUnlocked) {
+        playBackgroundMusic();
+    }
+});
+
+// 第三步：真正播放音乐的函数
+function playBackgroundMusic() {
+    if (backgroundAudio) {
+        backgroundAudio.play().then(function() {
+            // 播放成功！
+            isAudioUnlocked = true;
+            document.getElementById('musicBtn').innerHTML = '🎵 音乐播放中~';
+            document.getElementById('musicBtn').style.background = 'rgba(144, 238, 144, 0.9)';
+            document.getElementById('musicBtn').style.borderColor = '#4CAF50';
+            document.getElementById('musicBtn').style.color = '#4CAF50';
+            
+            console.log("背景音乐成功播放！");
+        }).catch(function(error) {
+            // 如果还是失败，给出更明确的指引
+            console.error('最终播放失败:', error);
+            alert("播放仍需一步授权：请先点击一下页面背景，再点击『确定』，然后再次点击音乐按钮试试~");
+        });
+    }
 }
 </script>
-
+<!-- === 代码结束 === -->
 <div class="container">
     <div class="container">
         <h1 class="title">致我最爱的人（小美）</h1>

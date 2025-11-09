@@ -85,30 +85,32 @@
     </style>
 </head>
 <body>
-        <!-- === 在这里粘贴背景音乐按钮的代码 === -->
-    <button id="musicBtn" onclick="playBackgroundMusic()" 
-            style="position: fixed; top: 20px; right: 20px; padding: 10px 15px; 
-                   background: rgba(255,255,255,0.9); border: none; border-radius: 20px; 
-                   cursor: pointer; z-index: 1000; font-size: 14px;">
-        🎵 开启音乐
-    </button>
+    </body>
+<!-- === 背景音乐播放按钮 === -->
+<button id="musicBtn" onclick="playBackgroundMusic()" 
+        style="position: fixed; top: 20px; right: 20px; padding: 10px 15px; 
+               background: rgba(255,255,255,0.9); border: none; border-radius: 20px; 
+               cursor: pointer; z-index: 1000; font-size: 14px;">
+    🎵 开启音乐
+</button>
 
-    <script>
-    function playBackgroundMusic() {
-        var audio = new Audio('透过眼睛看见心_(OJ版)-OJ....mp3');
-        audio.loop = true;
-        audio.volume = 0.3;
-        
-        audio.play().then(function() {
-            document.getElementById('musicBtn').innerHTML = '🎵 音乐播放中';
-            document.getElementById('musicBtn').style.background = 'rgba(144, 238, 144, 0.9)';
-        }).catch(function(error) {
-            console.error('播放失败:', error);
-            alert('播放失败，请点击页面任意位置后重试按钮');
-        });
-    }
-    </script>
-    <!-- === 代码结束 === -->
+<script>
+function playBackgroundMusic() {
+    var audio = new Audio('透过眼睛看见心_(OJ版)-OJ....mp3');
+    audio.loop = true;
+    audio.volume = 0.3;
+    
+    audio.play().then(function() {
+        document.getElementById('musicBtn').innerHTML = '🎵 音乐播放中';
+        document.getElementById('musicBtn').style.background = 'rgba(144, 238, 144, 0.9)';
+    }).catch(function(error) {
+        console.error('播放失败:', error);
+        alert('播放失败，请点击页面任意位置后重试按钮');
+    });
+}
+</script>
+
+<div class="container">
     <div class="container">
         <h1 class="title">致我最爱的人（小美）</h1>
         <div class="confession">
